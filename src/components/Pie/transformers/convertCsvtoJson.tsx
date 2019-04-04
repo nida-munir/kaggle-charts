@@ -7,11 +7,11 @@ export async function transform() {
       const query = "cp";
       const groupedData = getItems(response, query);
 
-      console.log(groupedData);
+      // console.log(groupedData);
       data = getDataForPieChart(groupedData);
-      console.log("returned data", data);
+      // console.log("returned data", data);
     });
-  console.log("returning data", data);
+  // console.log("returning data", data);
   return data;
 }
 function getItems(input: any, query: string) {
