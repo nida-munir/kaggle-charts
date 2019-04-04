@@ -3,6 +3,7 @@ import "./App.css";
 import { Pie } from "./components/Pie/Pie";
 import Sunburst from "./components/Sunburst/Sunburst";
 import { ResponsiveSankey } from "@nivo/sankey";
+import Sankey from "./components/Sankey/Sankey";
 
 class App extends Component {
   render() {
@@ -10,6 +11,7 @@ class App extends Component {
       <div className="App">
         <Pie />
         <Sunburst />
+        {/* <Sankey /> */}
       </div>
     );
   }

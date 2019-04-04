@@ -1,20 +1,20 @@
-export async function transform() {
+export async function readFile() {
   let data: any = [];
   await fetch("http://localhost:5000/api/csvToJson")
     .then(response => response.json())
     .then(response => {
-      //   console.log("csv to json", response);
-      const query = "cp";
-      const groupedData = getItems(response, query);
-
-      // console.log(groupedData);
-      data = getDataForPieChart(groupedData);
-      // console.log("returned data", data);
+      console.log(response);
+      data = transform(response);
     });
-  // console.log("returning data", data);
   return data;
 }
-function getItems(input: any, query: string) {
+export function transform(response: any) {
+  const query = "cp";
+  const groupedData = getCount(response, query);
+  return getDataForPieChart(groupedData);
+}
+// get count of patients for each chest pain type
+function getCount(input: any, query: string) {
   var result = Object.keys(input).reduce(function(acc: any, key) {
     // for each key in the data object
     var cp: any = input[key][query];
@@ -27,15 +27,27 @@ function getItems(input: any, query: string) {
 
 function getDataForPieChart(groupedData: any) {
   const data: any = [];
-  Object.keys(groupedData).reduce(function(acc: any, key) {
-    acc = {
-      id: key,
-      label: key,
+  let cpType = "";
+  Object.keys(groupedData).forEach(key => {
+    if (key == "0") {
+      cpType = "typical angina";
+    }
+    if (key == "1") {
+      cpType = "atypical angina";
+    }
+    if (key == "2") {
+      cpType = "non-anginal pain";
+    }
+    if (key == "3") {
+      cpType = "asymptomatic";
+    }
+    const temp = {
+      id: cpType,
+      label: cpType,
       value: groupedData[key]
     };
-    data.push(acc);
-    // acc = {};
-    // console.log("data transformed", data);
-  }, {});
+    data.push(temp);
+  });
+
   return data;
 }

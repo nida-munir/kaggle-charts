@@ -155,6 +155,8 @@ function getExAnValues(input: any, query: string) {
     else acc[cp] = 1;
     return acc;
   }, {});
+  // console.log("result", result);
+
   return result;
 }
 
@@ -182,6 +184,16 @@ function getFbsType(input: any, name: string) {
   };
   Object.keys(input).forEach(key => {
     const exValues = getExAnValues(input[key], "exang");
+    // console.log("exvlues", exValues);
+    // rename 0,1 with yes or no
+    const yes = Object.getOwnPropertyDescriptor(exValues, "0") || {};
+
+    const no = Object.getOwnPropertyDescriptor(exValues, "1") || {};
+    Object.defineProperty(exValues, "yes", yes);
+    Object.defineProperty(exValues, "no", no);
+    // console.log("exValues", exValues);
+    delete exValues["0"];
+    delete exValues["1"];
     const cpType = getChestPainTypesWithChildren(exValues, key);
     fbsType.children.push(cpType);
   });
