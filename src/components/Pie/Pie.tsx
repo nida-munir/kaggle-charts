@@ -1,45 +1,25 @@
 import React, { Component } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { transform } from "./transformers/convertCsvtoJson";
-export class Pie extends Component {
-  componentDidMount() {
-    transform();
+
+export interface PieState {
+  data: any;
+}
+export class Pie extends Component<{}, PieState> {
+  state = {
+    data: []
+  };
+  async componentDidMount() {
+    const data = await transform();
+    console.log(data);
+    this.setState({ data });
   }
   render() {
+    console.log("state", this.state.data);
+    const { data } = this.state;
     return (
       <ResponsivePie
-        data={[
-          {
-            id: "sass",
-            label: "sass",
-            value: 378,
-            color: "hsl(267, 70%, 50%)"
-          },
-          {
-            id: "haskell",
-            label: "haskell",
-            value: 260,
-            color: "hsl(133, 70%, 50%)"
-          },
-          {
-            id: "c",
-            label: "c",
-            value: 568,
-            color: "hsl(99, 70%, 50%)"
-          },
-          {
-            id: "erlang",
-            label: "erlang",
-            value: 287,
-            color: "hsl(271, 70%, 50%)"
-          },
-          {
-            id: "java",
-            label: "java",
-            value: 597,
-            color: "hsl(136, 70%, 50%)"
-          }
-        ]}
+        data={data}
         margin={{
           top: 40,
           right: 80,

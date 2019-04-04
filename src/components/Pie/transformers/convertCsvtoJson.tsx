@@ -1,35 +1,41 @@
-export function transform() {
-  fetch("http://localhost:5000/api/csvToJson")
+export async function transform() {
+  let data: any = [];
+  await fetch("http://localhost:5000/api/csvToJson")
     .then(response => response.json())
     .then(response => {
-      console.log("csv to json", response);
+      //   console.log("csv to json", response);
       const query = "cp";
-      console.log(getItems(response, query));
+      const groupedData = getItems(response, query);
+
+      console.log(groupedData);
+      data = getDataForPieChart(groupedData);
+      console.log("returned data", data);
     });
-  const csv = require("csvtojson");
+  console.log("returning data", data);
+  return data;
 }
 function getItems(input: any, query: string) {
   var result = Object.keys(input).reduce(function(acc: any, key) {
     // for each key in the data object
-    var cp: any = input[key][query]; // get the cpiliate of the according object
+    var cp: any = input[key][query];
     if (acc[cp]) acc[cp]++;
-    // if we already have have a counter for this cpiliate (cp) then increment the value from the accumulator acc
-    else acc[cp] = 1; // otherwise start a counter for this affiliate (initialized with 1)
+    else acc[cp] = 1;
     return acc;
   }, {});
   return result;
-  //   const arr = input;
-  //   const obj: any = {};
-  //   for (var i = 0; i < arr.length; i++) {
-  //     let name = arr[i].name;
-  //     if (!obj[name]) {
-  //       obj[arr[i].name] = 1;
-  //     } else if (obj[arr[i].name]) {
-  //       obj[arr[i].name] += 1;
-  //     }
-  //   }
-  //   return obj;
 }
-// example use
-// console.log(getItems(order_contents)); // outputs entire object
-// console.log(getItems(order_contents)["product 1"]); // outputs 10
+
+function getDataForPieChart(groupedData: any) {
+  const data: any = [];
+  Object.keys(groupedData).reduce(function(acc: any, key) {
+    acc = {
+      id: key,
+      label: key,
+      value: groupedData[key]
+    };
+    data.push(acc);
+    // acc = {};
+    // console.log("data transformed", data);
+  }, {});
+  return data;
+}
