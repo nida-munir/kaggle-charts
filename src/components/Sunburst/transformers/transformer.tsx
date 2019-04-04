@@ -1,121 +1,89 @@
 import { Children } from "react";
 
 export async function transform() {
-  let data: any = [];
+  const obj: any = {
+    name: "nivo",
+    children: []
+  };
   await fetch("http://localhost:5000/api/csvToJson")
     .then(response => response.json())
     .then(response => {
-      //   console.log("csv to json", response);
-      //   const groupedData = getItems(response, query);
       const genderObject = getGenderObject(response);
-      console.log(genderObject);
-      const FbsMales = getFbs(genderObject.males);
 
-      console.log("get fbs of males", FbsMales);
+      // separate data according to males and females
+      const FbsMales = getFbs(genderObject.males);
       const FbsFemales = getFbs(genderObject.females);
-      console.log("get fbs of females", FbsFemales);
+
+      // separate data according to high and low blood sugar in males
       const highFbsMalesCpTypes = getChestPainTypes(FbsMales.high);
       const lowFbsMalesCpTypes = getChestPainTypes(FbsMales.low);
+
+      // separate data according to high and low blood sugar in females
       const highFbsFemalesCpTypes = getChestPainTypes(FbsFemales.high);
       const lowFbsFemalesCpTypes = getChestPainTypes(FbsFemales.low);
 
-      console.log("cp males high : ", highFbsMalesCpTypes);
-      console.log("cp males low : ", lowFbsMalesCpTypes);
-      console.log("cp females high : ", highFbsFemalesCpTypes);
-      console.log("cp females low : ", lowFbsFemalesCpTypes);
-
-      //   const exForHighFbsMalesWithAta = getExerciseInducedAngina(
-      //     highFbsMalesCpTypes.aTypicalAngina
-      //   );
-      //   const exForHighFbsMalesWithAsym = getExerciseInducedAngina(
-      //     highFbsMalesCpTypes.asymptomatic
-      //   );
-      //   const exForHighFbsMalesWithTa = getExerciseInducedAngina(
-      //     highFbsMalesCpTypes.typicalAngina
-      //   );
-      //   const exForHighFbsMalesWithNap = getExerciseInducedAngina(
-      //     highFbsMalesCpTypes.nonAnginalPain
-      //   );
-
-      //   console.log("exForHighFbsMalesWithAta", exForHighFbsMalesWithAta);
-
-      //   console.log("exForHighFbsMalesWithAsym", exForHighFbsMalesWithAsym);
-
-      //   console.log("exForHighFbsMalesWithTa", exForHighFbsMalesWithTa);
-
-      //   console.log("exForHighFbsMalesWithNap", exForHighFbsMalesWithNap);
-      const aTypicalAnginaExValues = getExAnValues(
-        highFbsMalesCpTypes.aTypicalAngina,
-        "exang"
-      );
-      const cp0 = getChestPainTypesWithChildren(
-        aTypicalAnginaExValues,
-        "aTypicalAngina"
-      );
-      const asymtomaticExValues = getExAnValues(
-        highFbsMalesCpTypes.asymptomatic,
-        "exang"
-      );
-      const cp1 = getChestPainTypesWithChildren(
-        asymtomaticExValues,
-        "asymptomatic"
-      );
-
-      const nonAnginalPainExValues = getExAnValues(
-        highFbsMalesCpTypes.nonAnginalPain,
-        "exang"
-      );
-      const cp2 = getChestPainTypesWithChildren(
-        nonAnginalPainExValues,
-        "nonAnginalPain"
-      );
-
-      const typicalAnginaExValues = getExAnValues(
-        highFbsMalesCpTypes.typicalAngina,
-        "exang"
-      );
-      const cp3 = getChestPainTypesWithChildren(
-        typicalAnginaExValues,
-        "typicalAngina"
-      );
-
-      const fbsType: any = {
-        name: "highfbs",
-        children: {
-          cp0,
-          cp1,
-          cp2,
-          cp3
-        }
+      // combining males data and their children values here
+      const malesData: any = {
+        name: "males",
+        children: []
       };
-      console.log(fbsType);
-    });
-  return data;
-}
+      const malesHighFbs = getFbsType(highFbsMalesCpTypes, "high blood sugar");
+      malesData.children.push(malesHighFbs);
+      const malesLowFbs = getFbsType(lowFbsMalesCpTypes, "low blood sugar");
+      malesData.children.push(malesLowFbs);
 
-function getFbsType(input: any, name: string) {
-  const fbsType: any = {
-    name: name,
-    children: []
-  };
-  fbsType.children.push(input);
-  console.log("high gbs", fbsType);
-}
-function getChestPainTypesWithChildren(input: any, type: string) {
-  const cpType: any = {
-    name: type,
-    children: []
-  };
-  Object.keys(input).forEach(key => {
-    cpType.children.push({
-      name: key,
-      value: input[key]
-    });
-  });
-  console.log("type", cpType);
-  return cpType;
-}
+      // combining females data and their children values here
+      const femalesData: any = {
+        name: "females",
+        children: []
+      };
+      const femalesHighFbs = getFbsType(
+        highFbsFemalesCpTypes,
+        "high blood sugar"
+      );
+      const femalesLowFbs = getFbsType(lowFbsFemalesCpTypes, "low blood sugar");
+      femalesData.children.push(femalesHighFbs);
+      femalesData.children.push(femalesLowFbs);
 
+      // combine final object with males & females properties and return
+      obj.children.push(malesData);
+      obj.children.push(femalesData);
+
+      console.log("Data for sunburst: ", obj);
+    });
+  return obj;
+}
+// function getMalesData(input: any, name: string) {
+//   const malesData: any = {
+//     name: name,
+//     children: []
+//   };
+//   getFbsType(input, name);
+// }
+// function getGenderData(input: any, name: string) {
+//   const malesData: any = {
+//     name: "males",
+//     children: []
+//   };
+//   //   const malesHighFbs = getFbsType(highFbsMalesCpTypes, "high blood sugar");
+//   //   malesData.children.push(malesHighFbs);
+//   //   const malesLowFbs = getFbsType(lowFbsMalesCpTypes, "low blood sugar");
+//   //   malesData.children.push(malesLowFbs);
+
+//   //   console.log("males data,", malesData);
+//   Object.keys(input).forEach(key => {
+//     const highFbsMalesCpTypes = getChestPainTypes(input[key]);
+//     console.log("highFbsMalesCpTypes", highFbsMalesCpTypes["cp"]);
+//     //   const exValues = getExAnValues(input[key], "exang");
+//     //   // console.log("prob i", exValues);
+//     //   const cpType = getChestPainTypesWithChildren(exValues, key);
+//     //   fbsType.children.push(cpType);
+//   });
+
+//   // return fbsType;
+// }
+
+// separate according to gender
 function getGenderObject(input: any) {
   let males: any = [],
     females: any = [];
@@ -132,6 +100,8 @@ function getGenderObject(input: any) {
     females
   };
 }
+
+// separate according to low and high blood sugar
 function getFbs(input: any) {
   let high: any = [],
     low: any = [];
@@ -148,22 +118,8 @@ function getFbs(input: any) {
     low
   };
 }
-function getExerciseInducedAngina(input: any) {
-  // 1 = yes, 0 = no
-  let yes: any = [],
-    no: any = [];
-  input.forEach((item: any) => {
-    if (item["exang"] == "1") {
-      yes.push(item);
-    } else if (item["exang"] == "0") {
-      no.push(item);
-    }
-  });
-  return {
-    yes,
-    no
-  };
-}
+//
+// separate according to chest pain types
 function getChestPainTypes(input: any) {
   let typicalAngina: any = [], // 0
     nonAnginalPain: any = [], // 1
@@ -189,30 +145,9 @@ function getChestPainTypes(input: any) {
     asymptomatic
   };
 }
-function getExAnValues(input: any, query: string) {
-  //   const yes: any = [],
-  //     no: any = [];
 
-  //   Object.keys(input).forEach(key => {
-  //     let obj: any = {};
-  //     // 0 = yes,  1 = no
-  //     obj = {
-  //       value: input[key]
-  //     };
-  //     if (key == "0") {
-  //       obj.name = "yes";
-  //       yes.push();
-  //     } else if (key == "1") {
-  //       obj.name = "no";
-  //       no.push();
-  //     }
-  //     data.children.push(obj);
-  //   });
-  //   return data;
-  //   const data: any = {
-  //     name: "male",
-  //     children: []
-  //   };
+// get values for exercise induced angina
+function getExAnValues(input: any, query: string) {
   var result = Object.keys(input).reduce(function(acc: any, key) {
     // for each key in the data object
     var cp: any = input[key][query];
@@ -223,26 +158,50 @@ function getExAnValues(input: any, query: string) {
   return result;
 }
 
-// function getGenderDataForSunburstChart(groupedData: any) {
-//   const males: any = [],
-//     females: any = [];
-//   const data: any = {
-//     name: "nivo",
-//     children: []
-//   };
-//   Object.keys(groupedData).forEach(key => {
-//     let obj: any = {};
-//     // 1 = male,  0 = female
-//     obj = {
-//       value: groupedData[key]
-//     };
-//     if (key == "1") {
-//       obj.name = "Male";
-//       males.push();
-//     } else if (key == "0") {
-//       obj.name = "Female";
+// combine results here, chest pain types and their children values
+function getChestPainTypesWithChildren(input: any, type: string) {
+  const cpType: any = {
+    name: type,
+    children: []
+  };
+  //   console.log("Input", input);
+  Object.keys(input).forEach(key => {
+    cpType.children.push({
+      name: key,
+      value: input[key]
+    });
+  });
+  //   console.log("type", cpType);
+  return cpType;
+}
+// combine results here, low/high blood sugar with their children values
+function getFbsType(input: any, name: string) {
+  const fbsType: any = {
+    name: name,
+    children: []
+  };
+  Object.keys(input).forEach(key => {
+    const exValues = getExAnValues(input[key], "exang");
+    const cpType = getChestPainTypesWithChildren(exValues, key);
+    fbsType.children.push(cpType);
+  });
+
+  return fbsType;
+}
+
+// function getExerciseInducedAngina(input: any) {
+//   // 1 = yes, 0 = no
+//   let yes: any = [],
+//     no: any = [];
+//   input.forEach((item: any) => {
+//     if (item["exang"] == "1") {
+//       yes.push(item);
+//     } else if (item["exang"] == "0") {
+//       no.push(item);
 //     }
-//     data.children.push(obj);
 //   });
-//   return data;
+//   return {
+//     yes,
+//     no
+//   };
 // }

@@ -8,7 +8,7 @@ class Sunburst extends Component {
   };
   async componentDidMount() {
     const data = await transform();
-    // console.log("data to be updated in state:", data);
+    console.log("data to be updated in state:", data);
     this.setState({ data });
   }
   // obj = {
