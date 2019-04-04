@@ -1,97 +1,113 @@
 import React, { Component } from "react";
 import { ResponsiveSankey } from "@nivo/sankey";
+import { readFile } from "./transformers/transform";
 type Props = {};
 type State = {};
 class Sankey extends React.Component<Props, State> {
-  data = {
+  state = {
+    data: { nodes: [], links: [] }
+  };
+  async componentDidMount() {
+    const data = await readFile();
+    console.log("data to be updated in state:", data);
+    this.setState({ data });
+  }
+  dat2a = {
     nodes: [
       {
-        id: "John",
-        color: "hsl(244, 70%, 50%)"
+        id: "male"
       },
       {
-        id: "Raoul",
-        color: "hsl(198, 70%, 50%)"
+        id: "female"
       },
       {
-        id: "Jane",
-        color: "hsl(157, 70%, 50%)"
+        id: "high"
       },
       {
-        id: "Marcel",
-        color: "hsl(82, 70%, 50%)"
+        id: "low"
       },
       {
-        id: "Ibrahim",
-        color: "hsl(78, 70%, 50%)"
+        id: "cpType1"
       },
       {
-        id: "Junko",
-        color: "hsl(346, 70%, 50%)"
+        id: "cpType2"
+      },
+      {
+        id: "cpType3"
+      },
+      {
+        id: "cpType4"
       }
     ],
     links: [
       {
-        source: "Raoul",
-        target: "Junko",
+        source: "male",
+        target: "high",
         value: 171
       },
       {
-        source: "Raoul",
-        target: "Marcel",
+        source: "male",
+        target: "low",
         value: 152
       },
       {
-        source: "Raoul",
-        target: "Jane",
+        source: "female",
+        target: "high",
         value: 61
       },
       {
-        source: "Raoul",
-        target: "John",
+        source: "female",
+        target: "low",
         value: 179
       },
       {
-        source: "Raoul",
-        target: "Ibrahim",
+        source: "high",
+        target: "cpType1",
         value: 49
       },
       {
-        source: "John",
-        target: "Marcel",
+        source: "high",
+        target: "cpType2",
         value: 128
       },
       {
-        source: "John",
-        target: "Ibrahim",
+        source: "high",
+        target: "cpType3",
         value: 82
       },
       {
-        source: "John",
-        target: "Jane",
+        source: "high",
+        target: "cpType4",
         value: 11
       },
       {
-        source: "Junko",
-        target: "John",
+        source: "low",
+        target: "cpType1",
         value: 84
       },
       {
-        source: "Ibrahim",
-        target: "Jane",
+        source: "low",
+        target: "cpType2",
         value: 66
       },
       {
-        source: "Jane",
-        target: "Marcel",
+        source: "low",
+        target: "cpType3",
+        value: 147
+      },
+      {
+        source: "low",
+        target: "cpType4",
         value: 147
       }
     ]
   };
   render() {
+    const { data } = this.state;
+    console.log(data);
     return (
       <ResponsiveSankey
-        data={this.data}
+        data={this.dat2a}
         // margin={{
         //   top: 40,
         //   right: 160,

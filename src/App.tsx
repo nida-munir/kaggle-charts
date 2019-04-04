@@ -11,7 +11,9 @@ class App extends Component {
       <div className="App">
         <Pie />
         <Sunburst />
-        {/* <Sankey /> */}
+        {/* <div style={{ width: "70%" }}> */}
+        <Sankey />
+        {/* </div> */}
       </div>
     );
   }
