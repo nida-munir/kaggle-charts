@@ -6,7 +6,6 @@
   /* position: absolute;
   top: 0; */
   text-align: center;
-
   padding-bottom: 70px;
 }
 #footer {
@@ -22,10 +21,14 @@
 }
 #my-pie-chart,
 #my-sankey-chart,
-#my-sunburst-chart {
+#my-sunburst-chart,
+#pie-chart,
+#sankey-chart,
+#sunburst-chart {
   height: 400px;
 }
-#my-sankey-chart {
+#my-sankey-chart,
+#sankey-chart {
   width: 700px;
   margin: auto;
 }

@@ -1,39 +1,19 @@
-export async function readFile() {
-  let data: any = {};
-  await fetch("http://localhost:5000/api/csvToJson")
-    .then(response => response.json())
-    .then(response => {
-      const genderObject = getGenderObject(response);
-      const fbsObject = getFbsObject(response);
-      const maleFbsCount = getCount(genderObject.males, "fbs");
-      const femaleFbsCount = getCount(genderObject.females, "fbs");
-      const highBsCpTypes = getCount(fbsObject.high, "cp");
-      const lowBsCpTypes = getCount(fbsObject.low, "cp");
-      data = getTransformedData(
-        maleFbsCount,
-        femaleFbsCount,
-        highBsCpTypes,
-        lowBsCpTypes
-      );
-    });
+export function transform(response: any) {
+  const genderObject = getGenderObject(response);
+  const fbsObject = getFbsObject(response);
+  const maleFbsCount = getCount(genderObject.males, "fbs");
+  const femaleFbsCount = getCount(genderObject.females, "fbs");
+  const highBsCpTypes = getCount(fbsObject.high, "cp");
+  const lowBsCpTypes = getCount(fbsObject.low, "cp");
+  const data = getTransformedData(
+    maleFbsCount,
+    femaleFbsCount,
+    highBsCpTypes,
+    lowBsCpTypes
+  );
+  //   console.log("Returning data,", data);
   return data;
 }
-
-// export function transform(response: any) {
-//   const genderObject = getGenderObject(response);
-//   const fbsObject = getFbsObject(response);
-//   const maleFbsCount = getCount(genderObject.males, "fbs");
-//   const femaleFbsCount = getCount(genderObject.females, "fbs");
-//   const highBsCpTypes = getCount(fbsObject.high, "cp");
-//   const lowBsCpTypes = getCount(fbsObject.low, "cp");
-//   const data = getTransformedData(
-//     maleFbsCount,
-//     femaleFbsCount,
-//     highBsCpTypes,
-//     lowBsCpTypes
-//   );
-//   return data;
-// }
 
 function getTransformedData(
   maleFbsCount: any,
@@ -149,6 +129,9 @@ function getCount(input: any, query: string) {
 }
 // separate according to gender
 function getGenderObject(input: any) {
+  if (input.length === 0) {
+  }
+  //   console.log("input", input);
   let males: any = [],
     females: any = [];
   input.forEach((item: any) => {
