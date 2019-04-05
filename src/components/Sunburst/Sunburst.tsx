@@ -1,6 +1,8 @@
+// lib
 import React, { Component } from "react";
+// src
 import { ResponsiveSunburst } from "@nivo/sunburst";
-import { transform } from "./transformers/transformer";
+import { transform } from "./utils/getDataForSunburstChart";
 
 class Sunburst extends Component {
   state = {
@@ -8,83 +10,13 @@ class Sunburst extends Component {
   };
   async componentDidMount() {
     const data = await transform();
-    console.log("data to be updated in state:", data);
+    console.log("Transformed sunburst data", data);
+
     this.setState({ data });
   }
-  // obj = {
-  //   name: "nivo",
-  //   children: [
-  //     {
-  //       name: "viz",
-  //       children: [
-  //         {
-  //           name: "stack",
-  //           children: [
-  //             {
-  //               name: "chart",
-  //               loc: 40
-  //             },
-  //             {
-  //               name: "xAxis",
-  //               loc: 60
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           name: "pie",
-  //           children: [
-  //             {
-  //               name: "chart",
-  //               children: [
-  //                 {
-  //                   name: "pie",
-  //                   children: [
-  //                     {
-  //                       name: "outline",
-  //                       loc: 40
-  //                     },
-  //                     {
-  //                       name: "slices",
-  //                       loc: 60
-  //                     }
-  //                   ]
-  //                 },
-  //                 {
-  //                   name: "donut",
-  //                   loc: 60
-  //                 }
-  //               ]
-  //             },
-  //             {
-  //               name: "legends",
-  //               loc: 40
-  //             }
-  //           ]
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       name: "utils",
-  //       children: [
-  //         {
-  //           name: "randomize",
-  //           loc: 50
-  //         },
-  //         {
-  //           name: "resetClock",
-  //           loc: 30
-  //         },
-  //         {
-  //           name: "dbg",
-  //           loc: 20
-  //         }
-  //       ]
-  //     }
-  //   ]
-  // };
+
   render() {
     const { data } = this.state;
-    // console.log("in state: ", data);
     return (
       <div id="my-sunburst-chart">
         <ResponsiveSunburst

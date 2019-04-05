@@ -1,13 +1,3 @@
-export async function readFile() {
-  let data: any = [];
-  await fetch("http://localhost:5000/api/csvToJson")
-    .then(response => response.json())
-    .then(response => {
-      console.log(response);
-      data = transform(response);
-    });
-  return data;
-}
 export function transform(response: any) {
   const query = "cp";
   const groupedData = getCount(response, query);

@@ -18,6 +18,7 @@ app.listen(port, () => {
   console.log(">>> 🌎 Node Server is running at http://localhost:" + port);
 });
 
+// read csv file and return in json format
 app.get("/api/csvToJson", (req, res) => {
   const csv = require("csvtojson");
   const csvFilePath = "./heart.csv";
@@ -25,13 +26,6 @@ app.get("/api/csvToJson", (req, res) => {
   csv()
     .fromFile(csvFilePath)
     .then(jsonObj => {
-      console.log(jsonObj);
       res.send(jsonObj);
-      /**
-       * [
-       * 	{a:"1", b:"2", c:"3"},
-       * 	{a:"4", b:"5". c:"6"}
-       * ]
-       */
     });
 });

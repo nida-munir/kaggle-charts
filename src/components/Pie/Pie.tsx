@@ -1,21 +1,37 @@
+// lib
 import React, { Component } from "react";
+// src
 import { ResponsivePie } from "@nivo/pie";
-import { readFile, transform } from "./transformers/convertCsvtoJson";
+import { transform } from "./transformers/getPieChartData";
+import { readFile } from "../App/utils";
+import { PieProps } from "../../types/types";
 
-export interface PieState {
-  data: any;
-}
-export class Pie extends Component<{}, PieState> {
+export class Pie extends Component<{}, {}> {
   state = {
     data: []
   };
+
   async componentDidMount() {
-    const data = await readFile();
+    // console.log("Is Pie data ", this.props.data);
+    // console.log("Reading csv file");
+    const fileData = await readFile();
+    // console.log("csv file reading complete");
+    // console.log("Transforming Pie data");
+    const data = transform(fileData);
+    console.log("Transformed pie data ", data);
     this.setState({ data });
   }
+  // getData = () => {
+  //   return transform(this.props.data);
+  // // };
+  // updateQuery = (e:H)=>{
+  //   console.log();
+  // }
   render() {
-    const { data } = this.state;
-    // console.log("data", data);
+    const data = this.state.data;
+    // console.log("Is Pie Loading", this.props.isLoading);
+    // if (this.props.isLoading) return <p>Loading</p>;
+    // else
     return (
       <React.Fragment>
         <div id="my-pie-chart">
@@ -23,6 +39,7 @@ export class Pie extends Component<{}, PieState> {
             This pie chart shows four types of chest pains and the respective
             no. of patients who have it
           </h3>
+          {/* <button onClick={this.updateQuery()}>Chest pain</button> */}
           <ResponsivePie
             data={data}
             margin={{

@@ -1,111 +1,21 @@
+// lib
 import React, { Component } from "react";
 import { ResponsiveSankey } from "@nivo/sankey";
-import { readFile } from "./transformers/transform";
-type Props = {};
-type State = {};
-class Sankey extends React.Component<Props, State> {
+// src
+import { readFile } from "./utils/transform";
+
+class Sankey extends Component<{}, {}> {
   state = {
     data: { nodes: [], links: [] }
   };
   async componentDidMount() {
     const data = await readFile();
-    console.log("data to be updated in state:", data);
     this.setState({ data });
+    console.log("Transfomed sankey data", data);
   }
-  dat2a = {
-    nodes: [
-      {
-        id: "male"
-      },
-      {
-        id: "female"
-      },
-      {
-        id: "high"
-      },
-      {
-        id: "low"
-      },
-      {
-        id: "cpType1"
-      },
-      {
-        id: "cpType2"
-      },
-      {
-        id: "cpType3"
-      },
-      {
-        id: "cpType4"
-      }
-    ],
-    links: [
-      {
-        source: "male",
-        target: "high",
-        value: 171
-      },
-      {
-        source: "male",
-        target: "low",
-        value: 152
-      },
-      {
-        source: "female",
-        target: "high",
-        value: 61
-      },
-      {
-        source: "female",
-        target: "low",
-        value: 179
-      },
-      {
-        source: "high",
-        target: "cpType1",
-        value: 49
-      },
-      {
-        source: "high",
-        target: "cpType2",
-        value: 128
-      },
-      {
-        source: "high",
-        target: "cpType3",
-        value: 82
-      },
-      {
-        source: "high",
-        target: "cpType4",
-        value: 11
-      },
-      {
-        source: "low",
-        target: "cpType1",
-        value: 84
-      },
-      {
-        source: "low",
-        target: "cpType2",
-        value: 66
-      },
-      {
-        source: "low",
-        target: "cpType3",
-        value: 147
-      },
-      {
-        source: "low",
-        target: "cpType4",
-        value: 147
-      }
-    ]
-  };
+
   render() {
     const { data } = this.state;
-    console.log(data);
-    console.log(this.dat2a);
 
     if (data.nodes.length > 0) {
       return (
@@ -161,7 +71,6 @@ class Sankey extends React.Component<Props, State> {
         </div>
       );
     } else {
-      console.log("length is zero ", data.nodes.length > 0);
       return <p>no nodes</p>;
     }
   }

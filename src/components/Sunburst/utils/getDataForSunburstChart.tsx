@@ -1,5 +1,3 @@
-import { Children } from "react";
-
 export async function transform() {
   const obj: any = {
     name: "nivo",
@@ -49,39 +47,10 @@ export async function transform() {
       obj.children.push(malesData);
       obj.children.push(femalesData);
 
-      console.log("Data for sunburst: ", obj);
+      // console.log("Data for sunburst: ", obj);
     });
   return obj;
 }
-// function getMalesData(input: any, name: string) {
-//   const malesData: any = {
-//     name: name,
-//     children: []
-//   };
-//   getFbsType(input, name);
-// }
-// function getGenderData(input: any, name: string) {
-//   const malesData: any = {
-//     name: "males",
-//     children: []
-//   };
-//   //   const malesHighFbs = getFbsType(highFbsMalesCpTypes, "high blood sugar");
-//   //   malesData.children.push(malesHighFbs);
-//   //   const malesLowFbs = getFbsType(lowFbsMalesCpTypes, "low blood sugar");
-//   //   malesData.children.push(malesLowFbs);
-
-//   //   console.log("males data,", malesData);
-//   Object.keys(input).forEach(key => {
-//     const highFbsMalesCpTypes = getChestPainTypes(input[key]);
-//     console.log("highFbsMalesCpTypes", highFbsMalesCpTypes["cp"]);
-//     //   const exValues = getExAnValues(input[key], "exang");
-//     //   // console.log("prob i", exValues);
-//     //   const cpType = getChestPainTypesWithChildren(exValues, key);
-//     //   fbsType.children.push(cpType);
-//   });
-
-//   // return fbsType;
-// }
 
 // separate according to gender
 function getGenderObject(input: any) {

@@ -3,14 +3,13 @@ export async function readFile() {
   await fetch("http://localhost:5000/api/csvToJson")
     .then(response => response.json())
     .then(response => {
-      console.log(response);
       const genderObject = getGenderObject(response);
       const fbsObject = getFbsObject(response);
       const maleFbsCount = getCount(genderObject.males, "fbs");
       const femaleFbsCount = getCount(genderObject.females, "fbs");
       const highBsCpTypes = getCount(fbsObject.high, "cp");
       const lowBsCpTypes = getCount(fbsObject.low, "cp");
-      data = generateLinks(
+      data = getTransformedData(
         maleFbsCount,
         femaleFbsCount,
         highBsCpTypes,
@@ -19,7 +18,7 @@ export async function readFile() {
     });
   return data;
 }
-function generateLinks(
+function getTransformedData(
   maleFbsCount: any,
   femaleFbsCount: any,
   highBsCpTypes: any,
@@ -119,71 +118,6 @@ function generateLinks(
       }
     ]
   };
-  const links = [
-    {
-      source: "male",
-      target: "high",
-      value: maleFbsCount[0]
-    },
-    {
-      source: "male",
-      target: "low",
-      value: maleFbsCount[1]
-    },
-    {
-      source: "female",
-      target: "high",
-      value: femaleFbsCount[0]
-    },
-    {
-      source: "female",
-      target: "low",
-      value: femaleFbsCount[1]
-    },
-    ,
-    {
-      source: "high",
-      target: "cpType1",
-      value: highBsCpTypes[0]
-    },
-    {
-      source: "high",
-      target: "cpType2",
-      value: highBsCpTypes[1]
-    },
-    {
-      source: "high",
-      target: "cpType3",
-      value: highBsCpTypes[2]
-    },
-    {
-      source: "high",
-      target: "cpType4",
-      value: highBsCpTypes[3]
-    },
-    {
-      source: "low",
-      target: "cpType1",
-      value: lowBsCpTypes[0]
-    },
-    {
-      source: "low",
-      target: "cpType2",
-      value: lowBsCpTypes[1]
-    },
-    {
-      source: "low",
-      target: "cpType3",
-      value: lowBsCpTypes[2]
-    },
-    {
-      source: "low",
-      target: "cpType4",
-      value: lowBsCpTypes[3]
-    }
-  ];
-
-  return links;
 }
 // get count of patients for each chest pain type
 function getCount(input: any, query: string) {
@@ -196,6 +130,7 @@ function getCount(input: any, query: string) {
   }, {});
   return result;
 }
+// separate according to gender
 function getGenderObject(input: any) {
   let males: any = [],
     females: any = [];
@@ -212,7 +147,7 @@ function getGenderObject(input: any) {
     females
   };
 }
-
+// separate accordiing to high and low blood sugar, 1 = high, 0 = low high > 120mg/..
 function getFbsObject(input: any) {
   let high: any = [],
     low: any = [];
