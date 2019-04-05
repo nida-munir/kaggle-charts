@@ -19,12 +19,14 @@ app.listen(port, () => {
 });
 
 // read csv file and return in json format
-app.get("/api/csvToJson", (req, res) => {
+app.post("/api/csvToJson", (req, res) => {
+  const {
+    body: { path }
+  } = req;
+  console.log("Req Body: ", req.body);
   const csv = require("csvtojson");
-  const csvFilePath = "./heart.csv";
-  console.log(csvFilePath);
   csv()
-    .fromFile(csvFilePath)
+    .fromFile(path)
     .then(jsonObj => {
       res.send(jsonObj);
     });

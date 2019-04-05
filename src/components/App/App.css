@@ -38,3 +38,9 @@
   width: 700px;
   margin: auto;
 }
+#pie-attr a {
+  cursor: pointer;
+  margin-right: 20px;
+  font-weight: 500;
+  color: crimson;
+}

@@ -4,24 +4,31 @@ import React, { Component } from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { transform } from "./utils/getPieChartData";
 import { ChartProps } from "../../types/types";
+import { PieAttributes } from "./PieAttributes";
 
 export class PieChart extends Component<ChartProps, {}> {
   state = {
-    data: []
+    data: [],
+    query: "cp",
+    queryDescription: "Chest pain types"
   };
 
-  async componentDidUpdate(prevProps: ChartProps) {
+  async componentDidUpdate(prevProps: ChartProps, prevState: any) {
     const { isLoading, data: fileData } = this.props;
-    if (isLoading != prevProps.isLoading) {
+    const { query } = this.state;
+    if (isLoading != prevProps.isLoading || query !== prevState.query) {
       if (!isLoading) {
-        const data = transform(fileData);
+        const data = transform(fileData, query);
         this.setState({ data });
       }
     }
   }
 
+  updateQuery = (query: string, queryDescription: string) => {
+    this.setState({ query, queryDescription });
+  };
   render() {
-    const { data } = this.state;
+    const { data, queryDescription } = this.state;
     const { isLoading } = this.props;
     if (isLoading) return <p>Loading</p>;
     else
@@ -31,6 +38,56 @@ export class PieChart extends Component<ChartProps, {}> {
             This pie chart shows four types of chest pains and the respective
             no. of patients who have it
           </h5>
+          <PieAttributes updateQuery={this.updateQuery} />
+          <h5>{queryDescription}</h5>
+          {/* <span id="pie-params">
+            <a
+              onClick={() => {
+                this.updateQuery("fbs");
+              }}
+            >
+              fbs
+            </a>
+            <a
+              onClick={() => {
+                this.updateQuery("cp");
+              }}
+            >
+              cp
+            </a>
+
+            <a
+              onClick={() => {
+                this.updateQuery("thalach");
+              }}
+            >
+              thalach
+            </a>
+
+            <a
+              onClick={() => {
+                this.updateQuery("exang");
+              }}
+            >
+              exang
+            </a>
+            <a
+              onClick={() => {
+                this.updateQuery("oldpeak");
+              }}
+            >
+              oldpeak
+            </a>
+            <a
+              onClick={() => {
+                this.updateQuery("ca");
+              }}
+            >
+              ca
+            </a>
+          </span>
+        
+         */}
           <div id="pie-chart">
             {/* <button onClick={this.updateQuery()}>Chest pain</button> */}
             <ResponsivePie

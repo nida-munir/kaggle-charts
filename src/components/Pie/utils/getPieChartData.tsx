@@ -1,7 +1,12 @@
-export function transform(response: any) {
-  const query = "cp";
+export function transform(response: any, query = "cp") {
   const groupedData = getCount(response, query);
-  return getDataForPieChart(groupedData);
+  if (query == "fbs") return getBloodSugarData(groupedData);
+  if (query == "cp") return getChestPainData(groupedData);
+  if (query == "thalach") return getHeartRateData(groupedData);
+  if (query == "exang") return getExerciseData(groupedData);
+  if (query == "oldpeak") return getOldPeakData(groupedData);
+
+  if (query == "ca") return getMajorVesselsData(groupedData);
 }
 // get count of patients for each chest pain type
 function getCount(input: any, query: string) {
@@ -15,7 +20,7 @@ function getCount(input: any, query: string) {
   return result;
 }
 
-function getDataForPieChart(groupedData: any) {
+function getChestPainData(groupedData: any) {
   const data: any = [];
   let cpType = "";
   Object.keys(groupedData).forEach(key => {
@@ -34,6 +39,95 @@ function getDataForPieChart(groupedData: any) {
     const temp = {
       id: cpType,
       label: cpType,
+      value: groupedData[key]
+    };
+    data.push(temp);
+  });
+
+  return data;
+}
+
+function getBloodSugarData(groupedData: any) {
+  const data: any = [];
+  let bsType = "";
+  Object.keys(groupedData).forEach(key => {
+    if (key == "1") {
+      bsType = "High blood sugar";
+    }
+    if (key == "0") {
+      bsType = "Low blood sugar";
+    }
+
+    const temp = {
+      id: bsType,
+      label: bsType,
+      value: groupedData[key]
+    };
+    data.push(temp);
+  });
+
+  return data;
+}
+
+function getExerciseData(groupedData: any) {
+  const data: any = [];
+  let bsType = "";
+  Object.keys(groupedData).forEach(key => {
+    if (key == "1") {
+      bsType = "Yes";
+    }
+    if (key == "0") {
+      bsType = "No";
+    }
+
+    const temp = {
+      id: bsType,
+      label: bsType,
+      value: groupedData[key]
+    };
+    data.push(temp);
+  });
+
+  return data;
+}
+
+function getHeartRateData(groupedData: any) {
+  const data: any = [];
+  let bsType = "";
+  Object.keys(groupedData).forEach(key => {
+    const temp = {
+      id: key,
+      label: key,
+      value: groupedData[key]
+    };
+    data.push(temp);
+  });
+
+  return data;
+}
+
+function getOldPeakData(groupedData: any) {
+  const data: any = [];
+  let bsType = "";
+  Object.keys(groupedData).forEach(key => {
+    const temp = {
+      id: key,
+      label: key,
+      value: groupedData[key]
+    };
+    data.push(temp);
+  });
+
+  return data;
+}
+
+function getMajorVesselsData(groupedData: any) {
+  const data: any = [];
+  let bsType = "";
+  Object.keys(groupedData).forEach(key => {
+    const temp = {
+      id: key,
+      label: key,
       value: groupedData[key]
     };
     data.push(temp);
