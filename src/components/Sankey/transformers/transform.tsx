@@ -10,42 +10,12 @@ export async function readFile() {
       const femaleFbsCount = getCount(genderObject.females, "fbs");
       const highBsCpTypes = getCount(fbsObject.high, "cp");
       const lowBsCpTypes = getCount(fbsObject.low, "cp");
-
-      const links = generateLinks(
+      data = generateLinks(
         maleFbsCount,
         femaleFbsCount,
         highBsCpTypes,
         lowBsCpTypes
       );
-      data = {
-        links,
-        nodes: [
-          {
-            id: "male"
-          },
-          {
-            id: "female"
-          },
-          {
-            id: "high"
-          },
-          {
-            id: "low"
-          },
-          {
-            id: "cpType1"
-          },
-          {
-            id: "cpType2"
-          },
-          {
-            id: "cpType3"
-          },
-          {
-            id: "cpType4"
-          }
-        ]
-      };
     });
   return data;
 }
@@ -83,65 +53,69 @@ function generateLinks(
       }
     ],
     links: [
+      // 1
       {
         source: "male",
         target: "high",
-        value: 171
+        value: maleFbsCount[0]
       },
+      // 2
       {
         source: "male",
         target: "low",
-        value: 152
+        value: maleFbsCount[1]
       },
       {
         source: "female",
         target: "high",
-        value: 61
+        value: femaleFbsCount[0]
       },
       {
         source: "female",
         target: "low",
-        value: 179
+        value: femaleFbsCount[1]
       },
+
       {
         source: "high",
         target: "cpType1",
-        value: 49
+        value: highBsCpTypes[0]
       },
+
       {
         source: "high",
         target: "cpType2",
-        value: 128
+        value: highBsCpTypes[1]
       },
       {
         source: "high",
         target: "cpType3",
-        value: 82
+        value: highBsCpTypes[2]
       },
       {
         source: "high",
         target: "cpType4",
-        value: 11
+        value: highBsCpTypes[3]
       },
       {
         source: "low",
         target: "cpType1",
-        value: 84
+        value: lowBsCpTypes[0]
       },
       {
         source: "low",
         target: "cpType2",
-        value: 66
+        value: lowBsCpTypes[1]
       },
       {
         source: "low",
         target: "cpType3",
-        value: 147
+        value: lowBsCpTypes[2]
       },
       {
         source: "low",
         target: "cpType4",
-        value: 147
+        value: lowBsCpTypes[3]
       }
     ]
   };

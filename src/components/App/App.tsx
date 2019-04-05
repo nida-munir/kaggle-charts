@@ -8,13 +8,16 @@ import Sankey from "./components/Sankey/Sankey";
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Pie />
-        <Sunburst />
-        {/* <div style={{ width: "70%" }}> */}
-        <Sankey />
-        {/* </div> */}
-      </div>
+      <React.Fragment>
+        <div id="app">
+          <div id="content">
+            <Pie />
+            <Sunburst />
+            <Sankey />
+          </div>
+          <footer id="footer">Created by Nida M.</footer>
+        </div>
+      </React.Fragment>
     );
   }
 }

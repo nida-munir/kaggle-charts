@@ -1,0 +1,31 @@
+#app {
+  position: relative;
+}
+
+#content {
+  /* position: absolute;
+  top: 0; */
+  text-align: center;
+
+  padding-bottom: 70px;
+}
+#footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 30px;
+  padding: 10px;
+  background-color: chocolate;
+  text-align: center;
+  vertical-align: middle;
+  width: 100%;
+}
+#my-pie-chart,
+#my-sankey-chart,
+#my-sunburst-chart {
+  height: 400px;
+}
+#my-sankey-chart {
+  width: 700px;
+  margin: auto;
+}
