@@ -2,45 +2,36 @@
 import React, { Component } from "react";
 // src
 import { ResponsivePie } from "@nivo/pie";
-import { transform } from "./transformers/getPieChartData";
-import { readFile } from "../App/utils";
-import { PieProps } from "../../types/types";
+import { transform } from "./utils/getPieChartData";
+import { ChartProps } from "../../types/types";
 
-export class PieChart extends Component<PieProps, {}> {
+export class PieChart extends Component<ChartProps, {}> {
   state = {
     data: []
   };
 
-  async componentDidUpdate(prevProps: PieProps) {
-    // console.log("Is Pie data ", this.props.data);
-    // console.log("Reading csv file");
-    // const fileData = await readFile();
-    // console.log("csv file reading complete");
-    // console.log("Transforming Pie data");
-    if (this.props.isLoading != prevProps.isLoading) {
-      const data = transform(this.props.data);
-      //   console.log("Transformed pie copy data ", data);
-      this.setState({ data });
+  async componentDidUpdate(prevProps: ChartProps) {
+    const { isLoading, data: fileData } = this.props;
+    if (isLoading != prevProps.isLoading) {
+      if (!isLoading) {
+        const data = transform(fileData);
+        this.setState({ data });
+      }
     }
   }
-  // getData = () => {
-  //   return transform(this.props.data);
-  // // };
-  // updateQuery = (e:H)=>{
-  //   console.log();
-  // }
+
   render() {
-    const data = this.state.data;
-    // console.log("Is Pie Loading", this.props.isLoading);
-    if (this.props.isLoading) return <p>Loading</p>;
+    const { data } = this.state;
+    const { isLoading } = this.props;
+    if (isLoading) return <p>Loading</p>;
     else
       return (
         <React.Fragment>
+          <h3>
+            This pie chart shows four types of chest pains and the respective
+            no. of patients who have it
+          </h3>
           <div id="pie-chart">
-            <h3>
-              This pie chart shows four types of chest pains and the respective
-              no. of patients who have it
-            </h3>
             {/* <button onClick={this.updateQuery()}>Chest pain</button> */}
             <ResponsivePie
               data={data}

@@ -7,7 +7,7 @@ import Sankey from "../Sankey/Sankey";
 // styles
 import "./App.css";
 import { readFile } from "./utils";
-import { PieChart } from "../Pie/PieCopy";
+import { PieChart } from "../Pie/PieChart";
 import SankeyChart from "../Sankey/SankeyChart";
 import { SunburstChart } from "../Sunburst/SunburstChart";
 
@@ -25,30 +25,22 @@ class App extends Component {
     this.setState({ fileData, isLoading: false });
   }
   render() {
-    // const { fileData: data, isLoading } = this.state;
-    // console.log("Passing props and rendering charts..", data);
+    const { fileData, isLoading } = this.state;
     return (
       <React.Fragment>
         <div id="app">
           <div id="content">
-            <Pie />
-            <PieChart
-              isLoading={this.state.isLoading}
-              data={this.state.fileData}
-            />
-            <Sunburst />
-            <SunburstChart
-              isLoading={this.state.isLoading}
-              data={this.state.fileData}
-            />
-            <Sankey />
-            {console.log(this.state.isLoading)}
-            <SankeyChart
-              isLoading={this.state.isLoading}
-              data={this.state.fileData}
-            />
+            {/* <Pie /> */}
+            <PieChart isLoading={isLoading} data={fileData} />
+            {/* <Sunburst /> */}
+            <SunburstChart isLoading={isLoading} data={fileData} />
+            {/* <Sankey /> */}
+            {/* {console.log(isLoading)} */}
+            <SankeyChart isLoading={isLoading} data={fileData} />
           </div>
-          <footer id="footer">Created by Nida Munir.</footer>
+          <footer id="footer">
+            <p>Created by Nida Munir.</p>
+          </footer>
         </div>
       </React.Fragment>
     );

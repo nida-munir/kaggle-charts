@@ -24,93 +24,93 @@ function getTransformedData(
   return {
     nodes: [
       {
-        id: "male"
+        id: "Males"
       },
       {
-        id: "female"
+        id: "Females"
       },
       {
-        id: "high"
+        id: "High Blood Sugar"
       },
       {
-        id: "low"
+        id: "Low Blood Sugar"
       },
       {
-        id: "cpType1"
+        id: "Typical Angina"
       },
       {
-        id: "cpType2"
+        id: "Non Anginal Pain"
       },
       {
-        id: "cpType3"
+        id: "A Typical Angina"
       },
       {
-        id: "cpType4"
+        id: "Asymptomatic"
       }
     ],
     links: [
       // 1
       {
-        source: "male",
-        target: "high",
+        source: "Males",
+        target: "High Blood Sugar",
         value: maleFbsCount[0]
       },
       // 2
       {
-        source: "male",
-        target: "low",
+        source: "Males",
+        target: "Low Blood Sugar",
         value: maleFbsCount[1]
       },
       {
-        source: "female",
-        target: "high",
+        source: "Females",
+        target: "High Blood Sugar",
         value: femaleFbsCount[0]
       },
       {
-        source: "female",
-        target: "low",
+        source: "Females",
+        target: "Low Blood Sugar",
         value: femaleFbsCount[1]
       },
 
       {
-        source: "high",
-        target: "cpType1",
+        source: "High Blood Sugar",
+        target: "Typical Angina",
         value: highBsCpTypes[0]
       },
 
       {
-        source: "high",
-        target: "cpType2",
+        source: "High Blood Sugar",
+        target: "Non Anginal Pain",
         value: highBsCpTypes[1]
       },
       {
-        source: "high",
-        target: "cpType3",
+        source: "High Blood Sugar",
+        target: "A Typical Angina",
         value: highBsCpTypes[2]
       },
       {
-        source: "high",
-        target: "cpType4",
+        source: "High Blood Sugar",
+        target: "Asymptomatic",
         value: highBsCpTypes[3]
       },
       {
-        source: "low",
-        target: "cpType1",
+        source: "Low Blood Sugar",
+        target: "Typical Angina",
         value: lowBsCpTypes[0]
       },
       {
-        source: "low",
-        target: "cpType2",
+        source: "Low Blood Sugar",
+        target: "Non Anginal Pain",
         value: lowBsCpTypes[1]
       },
       {
-        source: "low",
-        target: "cpType3",
+        source: "Low Blood Sugar",
+        target: "A Typical Angina",
         value: lowBsCpTypes[2]
       },
       {
-        source: "low",
-        target: "cpType4",
+        source: "Low Blood Sugar",
+        target: "Asymptomatic",
         value: lowBsCpTypes[3]
       }
     ]

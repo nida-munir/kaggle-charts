@@ -42,8 +42,6 @@ export function transform(response: any) {
   obj.children.push(malesData);
   obj.children.push(femalesData);
 
-  // console.log("Data for sunburst: ", obj);
-
   return obj;
 }
 

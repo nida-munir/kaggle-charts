@@ -2,9 +2,8 @@
 import React, { Component } from "react";
 // src
 import { ResponsivePie } from "@nivo/pie";
-import { transform } from "./transformers/getPieChartData";
+import { transform } from "./utils/getPieChartData";
 import { readFile } from "../App/utils";
-import { PieProps } from "../../types/types";
 
 export class Pie extends Component<{}, {}> {
   state = {

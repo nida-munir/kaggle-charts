@@ -7,17 +7,25 @@
   top: 0; */
   text-align: center;
   padding-bottom: 70px;
+  margin: 0px 100px;
+}
+#footer p {
+  vertical-align: middle;
+  display: table-cell;
 }
 #footer {
   position: absolute;
   bottom: 0;
   left: 0;
-  height: 30px;
-  padding: 10px;
-  background-color: rgb(233, 146, 85);
+  height: 40px;
+  display: table;
+  background-color: rgb(8, 63, 3);
   text-align: center;
-  vertical-align: middle;
+
   width: 100%;
+  font-weight: 500;
+  color: #fff;
+  font-size: 12px;
 }
 #my-pie-chart,
 #my-sankey-chart,
