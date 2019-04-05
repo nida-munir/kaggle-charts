@@ -27,15 +27,13 @@
   color: #fff;
   font-size: 12px;
 }
-#my-pie-chart,
-#my-sankey-chart,
-#my-sunburst-chart,
+
 #pie-chart,
 #sankey-chart,
 #sunburst-chart {
   height: 400px;
 }
-#my-sankey-chart,
+
 #sankey-chart {
   width: 700px;
   margin: auto;

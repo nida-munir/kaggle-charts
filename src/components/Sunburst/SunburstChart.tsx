@@ -23,11 +23,11 @@ export class SunburstChart extends Component<ChartProps, {}> {
     const { data } = this.state;
     return (
       <React.Fragment>
-        <h3>
+        <h5>
           This sunburst chart shows males and females patients, their blood
           sugar level (high ( > 120 ) or low), chest pain type and whether
           exercise induces chest pain or not (yes/no)
-        </h3>
+        </h5>
         <div id="sunburst-chart">
           <ResponsiveSunburst
             data={data}

@@ -1,15 +1,12 @@
 // lib
 import React, { Component } from "react";
-import { Pie } from "../Pie/Pie";
 // src
-import Sunburst from "../Sunburst/Sunburst";
-import Sankey from "../Sankey/Sankey";
-// styles
-import "./App.css";
 import { readFile } from "./utils";
 import { PieChart } from "../Pie/PieChart";
 import SankeyChart from "../Sankey/SankeyChart";
 import { SunburstChart } from "../Sunburst/SunburstChart";
+// styles
+import "./App.css";
 
 class App extends Component {
   state = {
@@ -18,10 +15,9 @@ class App extends Component {
   };
   async componentDidMount() {
     this.setState({ isLoading: true });
-    // console.log("Reading csv file");
+    console.log("Reading csv file");
     const fileData = await readFile();
-    // console.log("csv file reading complete");
-
+    console.log("csv file reading complete");
     this.setState({ fileData, isLoading: false });
   }
   render() {
@@ -32,10 +28,7 @@ class App extends Component {
           <div id="content">
             {/* <Pie /> */}
             <PieChart isLoading={isLoading} data={fileData} />
-            {/* <Sunburst /> */}
             <SunburstChart isLoading={isLoading} data={fileData} />
-            {/* <Sankey /> */}
-            {/* {console.log(isLoading)} */}
             <SankeyChart isLoading={isLoading} data={fileData} />
           </div>
           <footer id="footer">

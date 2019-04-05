@@ -27,10 +27,10 @@ export class PieChart extends Component<ChartProps, {}> {
     else
       return (
         <React.Fragment>
-          <h3>
+          <h5>
             This pie chart shows four types of chest pains and the respective
             no. of patients who have it
-          </h3>
+          </h5>
           <div id="pie-chart">
             {/* <button onClick={this.updateQuery()}>Chest pain</button> */}
             <ResponsivePie

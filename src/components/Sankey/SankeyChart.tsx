@@ -26,11 +26,11 @@ class SankeyChart extends Component<ChartProps, {}> {
     if (data.nodes.length > 0) {
       return (
         <React.Fragment>
-          <h3>
+          <h5>
             This sankey chart represents relationship between gender and blood
             sugar level (high or low). and also the relationship between blood
             sugar level and the type of chest pain.
-          </h3>
+          </h5>
 
           <div id="sankey-chart">
             <ResponsiveSankey
